@@ -1,0 +1,47 @@
+angular.module('myapp',['ngRoute'])
+.config(function($routeProvider)
+{
+    $routeProvider.when('/homeee',
+    {
+        templateUrl:'homeee.html',
+        controller:'homectrl'}).when('/home/:first/:last',
+        {
+            templateUrl:'homeee.html',
+            controller:'homeeectrl'
+    }).when('/course',
+    {
+        templateUrl:'course.html',
+        controller:'coursectrl'
+    }).when('/student',
+    {
+        templateUrl:'student.html',
+        controller:'studentctrl'
+    })
+})
+.controller('myctrl',function()
+{
+
+})
+.controller("homeeectrl",function($scope,$routeParams)
+{
+    $scope.message="Homeee Page"
+    if($routeParams.first&&$routeParams.last)
+    {
+        $scope.person={
+            first:$routeParams.first,
+            last:$routeParams.last
+        };
+    }
+})
+.controller("coursectrl",function($scope)
+{
+   $scope.courses=["MCA","MSC","MBA","BCA","BCom","BBA"]; 
+})
+.controller("studentctrl",function($scope,$http)
+{
+    $http.get('student.json')
+    .success(function(response)
+    {
+        $scope.students=response.records;
+    });
+});
